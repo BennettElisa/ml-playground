@@ -22,6 +22,8 @@ import { MLTypes, ColumnTypes } from "./constants.js";
 const RESET_STATE = "RESET_STATE";
 const SET_IMPORTED_DATA = "SET_IMPORTED_DATA";
 const SET_SELECTED_TRAINER = "SET_SELECTED_TRAINER";
+/* Added new const value*/
+const SET_K_VALUE = "SET_K_VALUE";
 const SET_COLUMNS_BY_DATA_TYPE = "SET_COLUMNS_BY_DATA_TYPE";
 const SET_SELECTED_FEATURES = "SET_SELECTED_FEATURES";
 const SET_LABEL_COLUMN = "SET_LABEL_COLUMN";
@@ -44,6 +46,11 @@ export function setImportedData(data) {
 
 export function setSelectedTrainer(selectedTrainer) {
   return { type: SET_SELECTED_TRAINER, selectedTrainer };
+}
+
+/* Action creator for setKValue */
+export function setKValue (kValue) {
+  return { type: SET_K_VALUE, kValue };
 }
 
 export const setColumnsByDataType = (column, dataType) => ({
@@ -122,6 +129,8 @@ export function resetState() {
 const initialState = {
   data: [],
   selectedTrainer: undefined,
+  /* kValue const added */
+  kValue: undefined,
   columnsByDataType: {},
   selectedFeatures: [],
   labelColumn: undefined,
@@ -149,6 +158,13 @@ export default function rootReducer(state = initialState, action) {
     return {
       ...state,
       selectedTrainer: action.selectedTrainer
+    };
+  }
+  /* Add SET_K_VALUE to reducer */
+  if (action.type === SET_K_VALUE) {
+    return {
+      ...state,
+      kValue: action.kValue
     };
   }
   if (action.type === SET_COLUMNS_BY_DATA_TYPE) {

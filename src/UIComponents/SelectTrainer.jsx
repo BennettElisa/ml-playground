@@ -2,18 +2,28 @@
 import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { setSelectedTrainer, getCompatibleTrainers } from "../redux";
+import { setSelectedTrainer, getCompatibleTrainers, setKValue } from "../redux";
 
 class SelectTrainer extends Component {
   static propTypes = {
     selectedTrainer: PropTypes.string,
     setSelectedTrainer: PropTypes.func,
-    compatibleTrainers: PropTypes.object
+    compatibleTrainers: PropTypes.object,
+    setKValue: PropTypes.func,
+    kValue: PropTypes.number
   };
+
+
 
   handleChangeSelect = event => {
     this.props.setSelectedTrainer(event.target.value);
   };
+
+  /* add handleChangeInput Function */
+  handleChangeInput = event => {
+    console.log("Console log for kValue:", event.target.value);
+    this.props.setKValue(parseInt(event.target.value));
+  }
 
   render() {
     const { compatibleTrainers, selectedTrainer } = this.props;
@@ -43,6 +53,10 @@ class SelectTrainer extends Component {
               </div>
             )}
           </label>
+          <label>
+          <p>What would you like the value of K to be?</p>
+          <input onChange={this.handleChangeInput} type="text" placeholder="Enter value for K" />
+          </label>
         </form>
       </div>
     );
@@ -52,11 +66,18 @@ class SelectTrainer extends Component {
 export default connect(
   state => ({
     selectedTrainer: state.selectedTrainer,
-    compatibleTrainers: getCompatibleTrainers(state)
+    compatibleTrainers: getCompatibleTrainers(state),
+    kValue: state.kValue
   }),
   dispatch => ({
     setSelectedTrainer(selectedTrainer) {
       dispatch(setSelectedTrainer(selectedTrainer));
+    },
+    setKValue(kValue) {
+      dispatch(setKValue(kValue));
     }
-  })
+  }),
 )(SelectTrainer);
+
+
+
