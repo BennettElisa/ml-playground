@@ -27,6 +27,7 @@ class SelectTrainer extends Component {
 
   render() {
     const { compatibleTrainers, selectedTrainer } = this.props;
+    console.log(this.props.selectedTrainer)
     return (
       <div>
         <h2>Pick an Algorithm</h2>
@@ -53,10 +54,19 @@ class SelectTrainer extends Component {
               </div>
             )}
           </label>
-          <label>
-          <p>What would you like the value of K to be?</p>
-          <input onChange={this.handleChangeInput} type="text" placeholder="Enter value for K" />
-          </label>
+          {
+            (this.props.selectedTrainer === 'knnClassify' ||
+            this.props.selectedTrainer === 'knnRegress') && (
+          <div>
+            <label>
+             <p>What would you like the value of K to be?</p>
+                    <input
+                      onChange={this.handleChangeInput}
+                      type="text"
+                    />
+             </label>
+          </div>
+            )}
         </form>
       </div>
     );
